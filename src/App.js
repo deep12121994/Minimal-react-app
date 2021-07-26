@@ -3,6 +3,7 @@ import './App.css';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {REACT_APP_API_KEY} from './key';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
   
 
 function App() { 
@@ -10,6 +11,7 @@ function App() {
   const [searchImage, setSearchImage] = useState("");
   const [page,setPage] = useState([0]);
   const [userSearch, setUserSearch] = useState([]);
+  const options = [];
 
 //display api call
   const data = () => {
@@ -21,19 +23,24 @@ function App() {
     })
   }
 
+
 //serach api call 
   const fetchdata = (searchImage) => {
     const data = fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${REACT_APP_API_KEY}&tags=${searchImage}&format=json&nojsoncallback=1`, {
       'Access-Control-Allow-Origin': '*'
     })
       .then(res => res.json())
-      .then(res => {
-        setImages(res.photos.photo);
+      .then(result => {
+        setImages(result.photos.photo);
+        console.log(searchImage)
         if(userSearch.indexOf(searchImage) == -1){
           userSearch.push(searchImage);
+          options.push(searchImage);
           window.localStorage.setItem("searchList", JSON.stringify(userSearch));
         }
-        //setUserSearch([...userSearch,...[ {userSearch:searchImage}]])
+        setUserSearch(userSearch)
+       // setUserSearch([...userSearch,...[ {userSearch:searchImage}]])
+        console.log(userSearch)
         //localStorage.setItem('list', JSON.stringify(userSearch));
         
       })
@@ -69,20 +76,21 @@ function App() {
     <div className="cotainer">
       <div className="header-container">
         <header>Search Photos</header>
-        <input id={"store"} type="text" autoComplete="off"
-        onChange={(e) => setSearchImage(e.target.value)} />
+        
+        <Autocomplete
+        id="custom-input-demo"
+        options={userSearch}
+        renderInput={(params) => (
+          <div ref={params.InputProps.ref} onChange={(e) => setSearchImage(e.target.value)}>
+            <input style={{ width: 200 }} type="text" autoComplete="off"
+            {...params.inputProps} />
+            {userSearch.length != 0 ? (<button onClick={clearData} className="clr-btn">CLEAR OPTIONS</button>) : ""}
+          </div>
+        )}
+      />
       </div>
 
-      <div className="search-history-text">
-        {
-          userSearch.map((val) => {
-            return(
-              <ul><li key={val.id}>{val}</li></ul>
-            )
-          })
-        }
-        {userSearch.length != 0 ? (<button onClick={clearData} className="clr-btn">CLEAR</button>) : ""}
-      </div>
+      
 
       <div className="image-container">
         {
@@ -95,7 +103,7 @@ function App() {
               return (
                 <img 
                 src={`https://live.staticflickr.com/${server}/${id}_${secret}.jpg`} 
-                key={key} />
+                key={key} alt="image name"/>
               )
               
               })

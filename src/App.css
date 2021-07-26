@@ -52,13 +52,14 @@ input{
 
 .clr-btn{
   height: 28px;
-  width: 60px;
+  width: 160px;
   background-color: rgb(187, 20, 20);
   border-radius: 5px;
   color: white;
   padding: 4px;
   border: none;
   margin: 4px;
+  font-size: medium;
 }
 
 .dialog {
