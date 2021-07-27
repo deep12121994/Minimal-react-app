@@ -3,7 +3,7 @@ import './App.css';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {REACT_APP_API_KEY} from './key';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
+import ModalPicUp from './ModalPicUp';
   
 
 function App() { 
@@ -11,18 +11,19 @@ function App() {
   const [searchImage, setSearchImage] = useState("");
   const [page,setPage] = useState([0]);
   const [userSearch, setUserSearch] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [imageSrc, setImageSrc] = useState("");
   const options = [];
 
 //display api call
   const data = () => {
-    const datas = fetch('https://www.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=14d38fd077acfa78125c6e1a3ebca9f1&format=json&nojsoncallback=1&auth_token=72157719590788558-e2fe2c8fc6667ff6&api_sig=8391bb610545bb89b877d79623662d8c')
+    const datas = fetch('https://www.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=f3ca976d2c0414d193d744b3ddbd1a50&format=json&nojsoncallback=1&auth_token=72157719597914729-49a3480a7f7b9614&api_sig=85ae586f61f9704075d2c4d76fd70139')
       .then(res => res.json())
       .then(res => {
         //console.log(res);
         setImages(res.photos.photo)
     })
   }
-
 
 //serach api call 
   const fetchdata = (searchImage) => {
@@ -32,7 +33,6 @@ function App() {
       .then(res => res.json())
       .then(result => {
         setImages(result.photos.photo);
-        console.log(searchImage)
         if(userSearch.indexOf(searchImage) == -1){
           userSearch.push(searchImage);
           options.push(searchImage);
@@ -40,7 +40,6 @@ function App() {
         }
         setUserSearch(userSearch)
        // setUserSearch([...userSearch,...[ {userSearch:searchImage}]])
-        console.log(userSearch)
         //localStorage.setItem('list', JSON.stringify(userSearch));
         
       })
@@ -56,7 +55,7 @@ function App() {
         fetchdata(searchImage);
       }, 1000)*/
       const delayDebounceFn = setTimeout(() => {
-        console.log(searchImage);
+        //console.log(searchImage);
         fetchdata(searchImage);
       }, 3000);
   
@@ -65,7 +64,17 @@ function App() {
   }, [searchImage])
 
 
-  //const Search=document.getElementById("store");
+  //modal pop up image
+  const getModal = (e) => {
+    //console.log("event", e.target.attributes[0].nodeValue);
+    setImageSrc(e.target.attributes[0].nodeValue);
+    setShowModal(true);
+  }
+
+  //close modal pop up image
+  const hideModal = () => {
+    setShowModal(false);
+  }
 
   const clearData = () => {
     setUserSearch([]);
@@ -90,8 +99,7 @@ function App() {
       />
       </div>
 
-      
-
+    
       <div className="image-container">
         {
           <InfiniteScroll dataLength={images.length}
@@ -103,7 +111,7 @@ function App() {
               return (
                 <img 
                 src={`https://live.staticflickr.com/${server}/${id}_${secret}.jpg`} 
-                key={key} alt="image name"/>
+                key={key} alt="image name" onClick={getModal}/>
               )
               
               })
@@ -111,6 +119,9 @@ function App() {
           </InfiniteScroll>
         }  
       </div>
+
+    
+      <ModalPicUp show={showModal} onHide={hideModal} imageSrc={imageSrc}/>
     </div>
   );
 }
