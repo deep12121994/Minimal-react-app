@@ -73,7 +73,7 @@ input{
   display: flex;
 }
 
-img{
+.search-image-style{
   flex: 33.33%;
   width: 20rem;
   height: 15rem;
@@ -94,4 +94,21 @@ img{
   padding: 10px;
   box-shadow: 0 10px 30px 0 rgba(127, 127, 127, 0.3);
   background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+
+.view-btn{
+  height: 28px;
+  width: 160px;
+  background-color: rgb(10, 59, 133);
+  border-radius: 5px;
+  color: white;
+  padding: 4px;
+  border: none;
+  margin-bottom: 8px;
+  font-size: medium;
 }

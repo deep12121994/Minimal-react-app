@@ -10,15 +10,8 @@ const ModalPicUp = (props) => {
         <React.Fragment>
             {props.show && (
                 <div className="modal"> 
-        
-                <div>
-                    <img 
-                    src={props.imageSrc} 
-                        alt="image name"/>
-                    <button onClick={props.onHide}>Close Modal</button>
-                </div>           
-                   
-                    
+                    <button className="view-btn" onClick={props.onHide}>Close Modal</button>   
+                    <img src={props.imageSrc} alt="image name"/>     
                 </div>
             )}
         </React.Fragment>

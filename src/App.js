@@ -66,7 +66,7 @@ function App() {
 
   //modal pop up image
   const getModal = (e) => {
-    //console.log("event", e.target.attributes[0].nodeValue);
+    console.log("event", e);
     setImageSrc(e.target.attributes[0].nodeValue);
     setShowModal(true);
   }
@@ -111,6 +111,7 @@ function App() {
               return (
                 <img 
                 src={`https://live.staticflickr.com/${server}/${id}_${secret}.jpg`} 
+                className="search-image-style"
                 key={key} alt="image name" onClick={getModal}/>
               )
               
