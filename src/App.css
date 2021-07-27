@@ -79,7 +79,7 @@ input{
   height: 15rem;
   margin: 2.5rem;
   background-color: #d3d3d3;
-  padding: 1rem;
+  padding: 0.7rem;
   border-radius: 0.5rem;
   object-fit: cover;
 }
@@ -100,7 +100,6 @@ input{
   flex-direction: column;
 }
 
-
 .view-btn{
   height: 28px;
   width: 160px;
@@ -111,4 +110,11 @@ input{
   border: none;
   margin-bottom: 8px;
   font-size: medium;
+}
+
+.image-modal{
+  width: 500px;
+  height: 335px;
+  border-radius: 5px;
+
 }
