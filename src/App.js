@@ -17,7 +17,7 @@ function App() {
 
 //display api call
   const data = () => {
-    const datas = fetch('https://www.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=f3ca976d2c0414d193d744b3ddbd1a50&format=json&nojsoncallback=1&auth_token=72157719597914729-49a3480a7f7b9614&api_sig=85ae586f61f9704075d2c4d76fd70139')
+    const datas = fetch('https://www.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=f7ecbb0704a04eec3b8f5df512e1925c&format=json&nojsoncallback=1&auth_token=72157719600356683-09216fc1ce1bcd6a&api_sig=f1701a09accd37ae13b67cee71e39dba')
       .then(res => res.json())
       .then(res => {
         //console.log(res);
